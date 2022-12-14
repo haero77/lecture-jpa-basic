@@ -1,7 +1,7 @@
 package hellojpa.jpashop;
 
-import hellojpa.jpashop.domain.Member;
 import hellojpa.jpashop.domain.Order;
+import hellojpa.jpashop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,13 +20,9 @@ public class JpaMain {
 
         try {
 
-            // 객체지향적이지 않은 코드
-            Order order = em.find(Order.class, 1L);
-            Long memberId = order.getMemberId();
-            Member member = em.find(Member.class, memberId);
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
 
-            // 객체지향적인 코드
-            Member member = order.getMember();
 
             tx.commit(); // DB Query
         } catch (Exception e) {

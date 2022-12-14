@@ -1,6 +1,8 @@
 package hellojpa.jpashop.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -17,6 +19,9 @@ public class Member {
     private String street;
 
     private String zipcode;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>(); // 예제이기 때문에 추가했을 뿐. 안티패턴이다.
 
     public Long getId() {
         return id;
