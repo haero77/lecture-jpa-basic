@@ -1,6 +1,7 @@
-package hellojpa.example01;
+package hellojpa.jpashop;
 
-import hellojpa.practice.Member;
+import hellojpa.jpashop.domain.Member;
+import hellojpa.jpashop.domain.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,6 +19,15 @@ public class JpaMain {
         tx.begin();
 
         try {
+
+            // 객체지향적이지 않은 코드
+            Order order = em.find(Order.class, 1L);
+            Long memberId = order.getMemberId();
+            Member member = em.find(Member.class, memberId);
+
+            // 객체지향적인 코드
+            Member member = order.getMember();
+
             tx.commit(); // DB Query
         } catch (Exception e) {
             tx.rollback();
