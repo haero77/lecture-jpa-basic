@@ -1,16 +1,18 @@
-package hellojpa._03_relation_mapping;
+package hellojpa.jpashop;
 
+import hellojpa.jpashop.domain.Member;
+import hellojpa.jpashop.domain.Order;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+
         EntityManager em = emf.createEntityManager();
 
         EntityTransaction tx = em.getTransaction();
@@ -18,25 +20,15 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            // 객체지향적이지 않은 코드
+            Order order = em.find(Order.class, 1L);
+            Long memberId = order.getMemberId();
+            Member member = em.find(Member.class, memberId);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
-            em.persist(member);
+            // 객체지향적인 코드
+            Member member = order.getMember();
 
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-
-            List<Member> members = findMember.getTeam().getMembers();
-
-
-
-            tx.commit();
+            tx.commit(); // DB Query
         } catch (Exception e) {
             tx.rollback();
         } finally {
