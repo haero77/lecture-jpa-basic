@@ -15,6 +15,7 @@ public class Member {
 //    @Column(name = "team_id")
 //    private Long teamId;
 
+    // Member -> Team 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="team_id") // member 테이블의 FK 'team_id' 와 매핑
     private Team team;
